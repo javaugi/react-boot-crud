@@ -26,11 +26,12 @@ public class UserController {
 
     public UserController(ClientRegistrationRepository registrations) {
         this.registration = registrations.findByRegistrationId("okta");
+        log.info("UserController registration {}", this.registration);
     }
 
     @GetMapping("/api/user")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User user) {
-        log.error("Request to get user user {}", user);
+        log.info("Request getUser user {}", user);
         if (user == null) {
             return new ResponseEntity<>("", HttpStatus.OK);
         } else {
@@ -42,6 +43,7 @@ public class UserController {
     public ResponseEntity<?> logout(HttpServletRequest request,
             @AuthenticationPrincipal(expression = "idToken") OidcIdToken idToken) {
         // send logout URL to client so they can initiate logout
+        log.info("logout idToken {}", idToken);
         String logoutUrl = this.registration.getProviderDetails()
                 .getConfigurationMetadata().get("end_session_endpoint").toString();
 

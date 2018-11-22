@@ -35,13 +35,13 @@ class GroupController {
 
     @GetMapping("/groups")
     Collection<Group> groups(Principal principal) {
-        log.error("Request to get groups principal {}", principal);
+        log.info("Request to get groups principal {}", principal);
         return groupRepository.findAllByUserId(principal.getName());
     }
 
     @GetMapping("/group/{id}")
     ResponseEntity<?> getGroup(@PathVariable Long id) {
-        log.error("Request to get group id {}", id);
+        log.info("Request to get group id {}", id);
         Optional<Group> group = groupRepository.findById(id);
         return group.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

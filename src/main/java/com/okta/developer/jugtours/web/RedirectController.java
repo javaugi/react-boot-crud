@@ -10,6 +10,7 @@ public class RedirectController {
 
     @GetMapping("/private")
     public String redirectToRoot() {
+        log.info("redirectToRoot private ");
         return "redirect:/";
     }
 }
